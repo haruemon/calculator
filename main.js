@@ -4,16 +4,15 @@ let operators = {
     '-':'-',
     '+':'+',
 }
-let calc_params = [];
+let calc_text = '';
 let calc_result = 0;
-let now_number = '';
 $(function(){
     $('.num').on('click', function(){
         if (calc_result !== 0) {
             allClear();
         }
         showMainDisplay($(this).text());
-        now_number = now_number + $(this).text();
+        calc_text += $(this).text();
     })
     $('.calc').on('click', function(){
         calc_result = 0;
@@ -21,16 +20,12 @@ $(function(){
             removeOneMainDisplay();
         }
         showMainDisplay($(this).text());
-        calc_params.push(parseFloat(now_number));
-        calc_params.push(operators[$(this).text()]);
-        now_number = ''
+        calc_text += operators[$(this).text()];
     })
     $('#equal').on('click', function(){
-        calc_params.push(parseFloat(now_number));
-        calc_result = safeEval(calc_params.join(''));
+        calc_result = safeEval(calc_text);
         $('#main-display').text(calc_result);
-        calc_params = [];
-        now_number = calc_result
+        calc_text = calc_result;
     });
     $('#ac').on('click', function(){
         allClear();
@@ -44,8 +39,7 @@ function showMainDisplay(param)
 function allClear()
 {
     calc_result = 0;
-    calc_params = [];
-    now_number = '';
+    calc_text = '';
     $('#main-display').text('');
 }
 function removeOneMainDisplay()
@@ -53,6 +47,7 @@ function removeOneMainDisplay()
     let disp_text = $('#main-display').text();
     disp_text =  disp_text.slice(0, -1);
     $('#main-display').text(disp_text);
+    calc_text = calc_text.slice(0, -1);
 }
 function isCalc()
 {
