@@ -24,6 +24,8 @@ $(function(){
     })
     $('#equal').on('click', function(){
         calc_result = safeEval(calc_text);
+        let main_text = $('#main-display').text();
+        $('#sub-display').text(main_text + '=');
         $('#main-display').text(calc_result);
         calc_text = calc_result;
     });
@@ -41,6 +43,7 @@ function allClear()
     calc_result = 0;
     calc_text = '';
     $('#main-display').text('');
+    $('#sub-display').text('');
 }
 function removeOneMainDisplay()
 {
