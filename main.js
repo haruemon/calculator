@@ -17,12 +17,7 @@ $(function(){
     })
     $('.calc').on('click', function(){
         calc_result = 0;
-        if (isCalc()) {
-            removeOneMainDisplay();
-            calc_params.pop();
-        } else {
-            calc_params.push(parseFloat(now_number));
-        }
+        setNowNumber();
         showMainDisplay($(this).text());
         calc_params.push(operators[$(this).text()]);
         now_number = '';
@@ -31,14 +26,7 @@ $(function(){
         if (calc_params.length === 0) {
             return false;
         }
-        console.log(calc_params);
-        if (isCalc()) {
-            removeOneMainDisplay();
-            calc_params.pop();
-        } else {
-            calc_params.push(parseFloat(now_number));
-        }
-        console.log(calc_params);
+        setNowNumber()
         calc_result = safeEval(calc_params.join(''));
         let main_text = $('#main-display').text();
         $('#sub-display').text(main_text + '=');
@@ -50,6 +38,17 @@ $(function(){
         allClear();
     });
 });
+
+function setNowNumber()
+{
+    if (isCalc()) {
+        removeOneMainDisplay();
+        calc_params.pop();
+    } else {
+        calc_params.push(parseFloat(now_number));
+    }
+}
+
 function showMainDisplay(param)
 {
     $('#main-display').append(param);
