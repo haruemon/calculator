@@ -27,7 +27,7 @@ $(function(){
     })
     $('#equal').on('click', function(){
         calc_params.push(parseFloat(now_number));
-        calc_result = eval(calc_params.join(''));
+        calc_result = safeEval(calc_params.join(''));
         $('#main-display').text(calc_result);
         calc_params = [];
         now_number = calc_result
@@ -58,4 +58,7 @@ function isCalc()
 {
     let last_text = $('#main-display').text().slice( -1 ) ;
     return last_text in operators
+}
+function safeEval(val){
+    return Function('"use strict";return ('+val+')')();
 }
